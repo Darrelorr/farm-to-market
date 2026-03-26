@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --green-dark:   #1a3a1f;
+  --green-mid:    #2d6a35;
+  --green-light:  #4a9455;
+  --green-pale:   #e8f5e9;
+  --green-accent: #5cb85c;
+  --amber:        #f0a500;
+  --amber-light:  #fff8e1;
+  --earth:        #6b4c2a;
+  --earth-light:  #f5efe8;
+  --white:        #ffffff;
+  --off-white:    #f9faf8;
+  --gray-50:      #f4f6f4;
+  --gray-100:     #e8ece8;
+  --gray-300:     #b0bcb0;
+  --gray-500:     #6b7a6b;
+  --gray-700:     #3a463a;
+  --red:          #c0392b;
+  --red-light:    #fdecea;
+  --blue:         #1976d2;
+  --blue-light:   #e3f2fd;
+  --shadow-sm:    0 1px 4px rgba(26,58,31,0.08);
+  --shadow-md:    0 4px 16px rgba(26,58,31,0.12);
+  --shadow-lg:    0 8px 32px rgba(26,58,31,0.15);
+  --radius:       12px;
+  --radius-sm:    8px;
+  --radius-lg:    20px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--gray-700);
+  min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+
+button { cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+input, select, textarea {
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-100); border-radius: 3px; }
