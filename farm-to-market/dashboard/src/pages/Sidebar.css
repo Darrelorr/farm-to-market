@@ -34,7 +34,7 @@
   font-size: 18px;
 }
 
-.logo-text { font-family: ''Playfair Display'', serif; font-size: 16px; color: white; font-weight: 700; line-height: 1.1; }
+.logo-text { font-family: 'Playfair Display', serif; font-size: 16px; color: white; font-weight: 700; line-height: 1.1; }
 .logo-sub { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
 
 .sidebar-user { padding: 14px 14px; border-bottom: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; gap: 12px; }

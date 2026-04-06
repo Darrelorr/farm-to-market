@@ -53,64 +53,76 @@ export default function Home() {
   return (
     <div className="auth-screen">
       <div className="auth-card">
-        <div className="auth-logo">
-          <div className="logo-icon">🌾</div>
-          <h1>Kayapa FarmMarket</h1>
-          <p>Connecting farmers directly to buyers</p>
-        </div>
-
-        <div className="auth-tabs">
-          <button className={`auth-tab ${tab === 'login' ? 'active' : ''}`} onClick={() => setTab('login')}>Sign In</button>
-          <button className={`auth-tab ${tab === 'register' ? 'active' : ''}`} onClick={() => setTab('register')}>Register</button>
-        </div>
-
-        {/* LOGIN */}
-        {tab === 'login' && (
-          <div>
-            <div className="form-group">
-              <label>Email Address</label>
-              <input type="email" placeholder="you@email.com" value={loginEmail} onChange={e => setLoginEmail(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleLogin()} />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input type="password" placeholder="••••••••" value={loginPass} onChange={e => setLoginPass(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleLogin()} />
-            </div>
-            {loginError && <div className="alert alert-error">❌ {loginError}</div>}
-            <button className="btn btn-primary btn-full" onClick={handleLogin}>Sign In</button>
+        <div className="auth-side">
+          <div className="auth-logo">
+            <div className="logo-icon">🌾</div>
+            <h1>Kayapa Farm To Market</h1>
+            <p>Connecting farmers directly to buyers</p>
           </div>
-        )}
+          <div className="auth-copy">
+            <h2>Fresh food, direct from the farm.</h2>
+            <p>Sign in to manage listings, track orders, and complete transactions faster with a clean, modern dashboard experience.</p>
+            <ul className="auth-features">
+              <li>Trusted farm-to-market network</li>
+              <li>Farmer and buyer accounts</li>
+              <li>Fast access to orders and produce</li>
+            </ul>
+          </div>
+        </div>
 
-        {/* REGISTER */}
-        {tab === 'register' && (
-          <div>
-            <div style={{ marginBottom: '12px' }}>
-              <label className="text-sm" style={{ display: 'block', marginBottom: '8px', fontWeight: 500 }}>I am a:</label>
-              <div className="role-selector">
-                {[['farmer','👨‍🌾','Farmer'],['buyer','🛒','Buyer']].map(([r, icon, label]) => (
-                  <div key={r} className={`role-option ${role === r ? 'selected' : ''}`} onClick={() => setRole(r)}>
-                    <div className="role-icon">{icon}</div>
-                    <div className="role-label">{label}</div>
-                  </div>
-                ))}
+        <div className="auth-panel">
+          <div className="auth-tabs">
+            <button className={`auth-tab ${tab === 'login' ? 'active' : ''}`} onClick={() => setTab('login')}>Sign In</button>
+            <button className={`auth-tab ${tab === 'register' ? 'active' : ''}`} onClick={() => setTab('register')}>Register</button>
+          </div>
+
+          {tab === 'login' && (
+            <div className="auth-form">
+              <div className="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="you@email.com" value={loginEmail} onChange={e => setLoginEmail(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleLogin()} />
               </div>
+              <div className="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="••••••••" value={loginPass} onChange={e => setLoginPass(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleLogin()} />
+              </div>
+              {loginError && <div className="alert alert-error">❌ {loginError}</div>}
+              <button className="btn btn-primary btn-full" onClick={handleLogin}>Sign In</button>
             </div>
-            <div className="form-row">
-              <div className="form-group"><label>First Name</label><input type="text" placeholder="Juan" value={fname} onChange={e => setFname(e.target.value)} /></div>
-              <div className="form-group"><label>Last Name</label><input type="text" placeholder="dela Cruz" value={lname} onChange={e => setLname(e.target.value)} /></div>
+          )}
+
+          {tab === 'register' && (
+            <div className="auth-form">
+              <div className="form-subtitle">Create a new account</div>
+              <div className="role-block">
+                <label className="text-sm">I am a:</label>
+                <div className="role-selector">
+                  {[['farmer','👨‍🌾','Farmer'],['buyer','🛒','Buyer']].map(([r, icon, label]) => (
+                    <div key={r} className={`role-option ${role === r ? 'selected' : ''}`} onClick={() => setRole(r)}>
+                      <div className="role-icon">{icon}</div>
+                      <div className="role-label">{label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group"><label>First Name</label><input type="text" placeholder="Juan" value={fname} onChange={e => setFname(e.target.value)} /></div>
+                <div className="form-group"><label>Last Name</label><input type="text" placeholder="Dela Cruz" value={lname} onChange={e => setLname(e.target.value)} /></div>
+              </div>
+              <div className="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} /></div>
+              <div className="form-group"><label>Contact Number</label><input type="text" placeholder="09xxxxxxxxx" value={phone} onChange={e => setPhone(e.target.value)} /></div>
+              {role === 'farmer' && (
+                <div className="form-group"><label>Farm Location / Barangay</label><input type="text" placeholder="Brgy. Kayapa" value={location} onChange={e => setLocation(e.target.value)} /></div>
+              )}
+              <div className="form-group"><label>Password</label><input type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} /></div>
+              {regError   && <div className="alert alert-error">❌ {regError}</div>}
+              {regSuccess && <div className="alert alert-success">✅ {regSuccess}</div>}
+              <button className="btn btn-primary btn-full" onClick={handleRegister}>Create Account</button>
             </div>
-            <div className="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} /></div>
-            <div className="form-group"><label>Contact Number</label><input type="text" placeholder="09xxxxxxxxx" value={phone} onChange={e => setPhone(e.target.value)} /></div>
-            {role === 'farmer' && (
-              <div className="form-group"><label>Farm Location / Barangay</label><input type="text" placeholder="Brgy. Kayapa" value={location} onChange={e => setLocation(e.target.value)} /></div>
-            )}
-            <div className="form-group"><label>Password</label><input type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} /></div>
-            {regError   && <div className="alert alert-error">❌ {regError}</div>}
-            {regSuccess && <div className="alert alert-success">✅ {regSuccess}</div>}
-            <button className="btn btn-primary btn-full" onClick={handleRegister}>Create Account</button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )

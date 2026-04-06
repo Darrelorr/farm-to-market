@@ -6,7 +6,7 @@ import './Products.css'
 
 const THUMB_BG = { Vegetables: 'green-bg', Fruits: 'amber-bg', Grains: 'amber-bg', 'Root Crops': 'earth-bg' }
 
-export default function Students() {
+export default function Products() {
   const { user } = useAuth()
   const location = useLocation()
 

@@ -10,28 +10,41 @@ export default function Users() {
   const isProfile = location.pathname === '/profile'
 
   const [users, setUsers]   = useState([])
+  const [stats, setStats]   = useState({ total: 0, farmers: 0, buyers: 0 })
   const [toast, setToast]   = useState('')
 
-  // profile form
-  const [fname, setFname]       = useState(user.fname)
-  const [lname, setLname]       = useState(user.lname)
-  const [email, setEmail]       = useState(user.email)
-  const [phone, setPhone]       = useState(user.phone || '')
-  const [loc,   setLoc]         = useState(user.location || '')
+  const [fname, setFname]   = useState(user.fname)
+  const [lname, setLname]   = useState(user.lname)
+  const [email, setEmail]   = useState(user.email)
+  const [phone, setPhone]   = useState(user.phone || '')
+  const [loc,   setLoc]     = useState(user.location || '')
 
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(''), 3000) }
 
-  useEffect(() => { if (!isProfile) fetchUsers() }, [isProfile])
+  useEffect(() => {
+    if (isProfile && user.role === 'admin') {
+      // admin profile still needs user counts for display
+      fetchUsers(true)
+    } else if (!isProfile) {
+      fetchUsers(false)
+    }
+  }, [isProfile])
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (statsOnly = false) => {
     const res = await axios.get('/api/users')
-    setUsers(res.data)
+    const all = res.data
+    setStats({
+      total:   all.length,
+      farmers: all.filter(u => u.role === 'farmer').length,
+      buyers:  all.filter(u => u.role === 'buyer').length,
+    })
+    if (!statsOnly) setUsers(all)
   }
 
   const toggleStatus = async (id) => {
     const res = await axios.patch(`/api/users/${id}/status`)
     showToast(`User ${res.data.status === 'active' ? 'activated' : 'deactivated'}.`)
-    fetchUsers()
+    fetchUsers(false)
   }
 
   const saveProfile = async () => {
@@ -48,15 +61,36 @@ export default function Users() {
       <div>
         <div className="topbar"><div className="topbar-title">My Profile</div></div>
         <div className="page-content">
+
           <div className="profile-header">
             <div className="profile-avatar">
               {user.role === 'farmer' ? '👨‍🌾' : user.role === 'buyer' ? '🛒' : '🛡️'}
             </div>
-            <div>
+            <div className="profile-header-info">
               <div className="profile-name">{user.fname} {user.lname}</div>
-              <div className="profile-role-label">{cap(user.role)} · {user.location || 'Kayapa, Nueva Vizcaya'}</div>
+              <div className="profile-role-label">
+                {cap(user.role)} · {user.location || 'Kayapa, Nueva Vizcaya'}
+              </div>
             </div>
           </div>
+
+          {/* Admin stats shown on profile */}
+          {user.role === 'admin' && (
+            <div className="profile-stats-row">
+              <div className="profile-stat">
+                <div className="profile-stat-value">{stats.total}</div>
+                <div className="profile-stat-label">Total Users</div>
+              </div>
+              <div className="profile-stat">
+                <div className="profile-stat-value">{stats.farmers}</div>
+                <div className="profile-stat-label">Farmers</div>
+              </div>
+              <div className="profile-stat">
+                <div className="profile-stat-value">{stats.buyers}</div>
+                <div className="profile-stat-label">Buyers</div>
+              </div>
+            </div>
+          )}
 
           <div className="card">
             <div className="card-header"><span className="card-title">Account Information</span></div>
@@ -94,6 +128,7 @@ export default function Users() {
               </button>
             </div>
           </div>
+
         </div>
         {toast && <div className="toast-container"><div className="toast">{toast}</div></div>}
       </div>
@@ -107,9 +142,9 @@ export default function Users() {
         <div className="topbar-title">Manage Users</div>
         <div className="topbar-actions">
           <div className="users-summary">
-            <span>👥 Total: <strong>{users.length}</strong></span>
-            <span>👨‍🌾 Farmers: <strong>{users.filter(u => u.role === 'farmer').length}</strong></span>
-            <span>🛒 Buyers: <strong>{users.filter(u => u.role === 'buyer').length}</strong></span>
+            <span>👥 Total: <strong>{stats.total}</strong></span>
+            <span>👨‍🌾 Farmers: <strong>{stats.farmers}</strong></span>
+            <span>🛒 Buyers: <strong>{stats.buyers}</strong></span>
           </div>
         </div>
       </div>
@@ -141,9 +176,7 @@ export default function Users() {
                   <tr key={u.id}>
                     <td>
                       <div className="user-row">
-                        <div className="user-mini-avatar">
-                          {u.fname?.[0]}{u.lname?.[0]}
-                        </div>
+                        <div className="user-mini-avatar">{u.fname?.[0]}{u.lname?.[0]}</div>
                         <strong>{u.fname} {u.lname}</strong>
                       </div>
                     </td>

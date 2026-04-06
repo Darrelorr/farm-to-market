@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home.jsx'
+import Dashboard from './pages/Dashboard.jsx'
 import Products from './pages/Products.jsx'
 import Users from './pages/Users.jsx'
 import Orders from './pages/Orders.jsx'
@@ -41,7 +42,7 @@ export default function App() {
           {/* Protected */}
           <Route path="/dashboard" element={
             <PrivateRoute>
-              <AppLayout><Products /></AppLayout>
+              <AppLayout><Dashboard /></AppLayout>
             </PrivateRoute>
           } />
           <Route path="/products" element={
