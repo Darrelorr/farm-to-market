@@ -157,13 +157,13 @@ export default function Products() {
                     </td></tr>
                   ) : filteredProducts.map(p => (
                     <tr key={p.id}>
-                      <td><strong>{p.emoji} {p.name}</strong></td>
-                      <td>₱{p.price}/kg</td>
-                      <td>{p.stock} kg</td>
-                      <td><span className="tag">{p.category}</span></td>
-                      <td>{p.harvest || '—'}</td>
-                      <td><span className={`badge ${p.status === 'active' ? 'badge-green' : 'badge-gray'}`}>{p.status}</span></td>
-                      <td>
+                      <td data-label="Crop"><strong>{p.emoji} {p.name}</strong></td>
+                      <td data-label="Price/kg">₱{p.price}/kg</td>
+                      <td data-label="Stock">{p.stock} kg</td>
+                      <td data-label="Category"><span className="tag">{p.category}</span></td>
+                      <td data-label="Harvest">{p.harvest || '—'}</td>
+                      <td data-label="Status"><span className={`badge ${p.status === 'active' ? 'badge-green' : 'badge-gray'}`}>{p.status}</span></td>
+                      <td data-label="Actions">
                         <button className="btn btn-sm btn-secondary" onClick={() => handleEditPrice(p)}>Edit Price</button>
                         {' '}
                         <button className="btn btn-sm btn-danger" onClick={() => handleDelete(p.id)}>Remove</button>

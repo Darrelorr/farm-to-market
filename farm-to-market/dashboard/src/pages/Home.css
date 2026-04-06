@@ -243,10 +243,6 @@
 .alert-error { background: #ffeaea; color: #8b2323; }
 .alert-success { background: #e7f7e3; color: #2f7f29; }
 
-.btn-full {
-  width: 100%;
-}
-
 @media (max-width: 900px) {
   .auth-card { grid-template-columns: 1fr; }
   .auth-side, .auth-panel { padding: 32px 28px; }
