@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useAuth } from '../App.jsx'
+import './Dashboard.css'
 
 export default function Dashboard() {
   const { user } = useAuth()
@@ -40,7 +41,7 @@ export default function Dashboard() {
           {stats.map((s, i) => (
             <div className="stat-card" key={i}>
               <div className={`stat-icon ${s.color}`}>{s.icon}</div>
-              <div>
+              <div className="stat-content">
                 <div className="stat-value">{s.value}</div>
                 <div className="stat-label">{s.label}</div>
               </div>

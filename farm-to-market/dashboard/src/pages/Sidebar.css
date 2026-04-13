@@ -19,8 +19,9 @@
 
 .sidebar-logo {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .logo-mark {
@@ -32,6 +33,19 @@
   align-items: center;
   justify-content: center;
   font-size: 18px;
+}
+
+.logo-mark-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+
+.logo-text-wrapper {8
+  text-align: center;
 }
 
 .logo-text { font-family: 'Playfair Display', serif; font-size: 16px; color: white; font-weight: 700; line-height: 1.1; }
@@ -82,6 +96,15 @@
     gap: 8px;
     font-weight: 700;
     color: white;
+  }
+
+  .mobile-logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
   }
 
   .mobile-logo-text { font-size: 16px; }

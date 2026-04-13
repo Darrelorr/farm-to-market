@@ -9,7 +9,7 @@ export default defineConfig({
     allowedHosts: ['eulah-testable-needingly.ngrok-free.dev'],
     proxy: {
       '/api': {
-        target: 'https://farm-to-market-server.onrender.com',
+        target: 'http://localhost:5000',
         changeOrigin: true
       }
     }

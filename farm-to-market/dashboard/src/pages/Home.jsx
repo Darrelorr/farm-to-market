@@ -25,6 +25,7 @@ export default function Home() {
   const [phone, setPhone]     = useState('')
   const [location, setLocation] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const handleLogin = async () => {
     setLoginError('')
@@ -40,7 +41,22 @@ export default function Home() {
   const handleRegister = async () => {
     setRegError('')
     setRegSuccess('')
-    if (!fname || !lname || !email || !password) { setRegError('Please fill in all required fields.'); return }
+    if (!fname || !lname || !email || !password || !confirmPassword) { setRegError('Please fill in all required fields.'); return }
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) { setRegError('Invalid email format.'); return }
+
+    // Password complexity validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    if (!passwordRegex.test(password)) {
+      setRegError('Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+      return
+    }
+
+    // Password confirmation validation
+    if (password !== confirmPassword) { setRegError('Passwords do not match.'); return }
+
     try {
       await axios.post('/api/register', { fname, lname, email, password, role, phone, location })
       setRegSuccess('Account created! You can now sign in.')
@@ -55,13 +71,12 @@ export default function Home() {
       <div className="auth-card">
         <div className="auth-side">
           <div className="auth-logo">
-            <div className="logo-icon">🌾</div>
+            <img src="/Kayapa_Nueva_Vizcaya.png" alt="Barangay Kayapa Logo" className="logo-icon-img" />
             <h1>Kayapa Farm To Market</h1>
             <p>Connecting farmers directly to buyers</p>
           </div>
           <div className="auth-copy">
             <h2>Fresh food, direct from the farm.</h2>
-            <p>Sign in to manage listings, track orders, and complete transactions faster with a clean, modern dashboard experience.</p>
             <ul className="auth-features">
               <li>Trusted farm-to-market network</li>
               <li>Farmer and buyer accounts</li>
@@ -117,6 +132,7 @@ export default function Home() {
                 <div className="form-group"><label>Farm Location / Barangay</label><input type="text" placeholder="Brgy. Kayapa" value={location} onChange={e => setLocation(e.target.value)} /></div>
               )}
               <div className="form-group"><label>Password</label><input type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} /></div>
+              <div className="form-group"><label>Confirm Password</label><input type="password" placeholder="••••••••" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} /></div>
               {regError   && <div className="alert alert-error">❌ {regError}</div>}
               {regSuccess && <div className="alert alert-success">✅ {regSuccess}</div>}
               <button className="btn btn-primary btn-full" onClick={handleRegister}>Create Account</button>

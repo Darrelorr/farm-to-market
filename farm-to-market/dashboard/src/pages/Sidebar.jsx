@@ -47,10 +47,9 @@ export default function Sidebar() {
       <aside className="sidebar">
         <div className="sidebar-header">
           <div className="sidebar-logo">
-            <div className="logo-mark">🌾</div>
-            <div>
-              <div className="logo-text">FarmMarket</div>
-              <div className="logo-sub">Kayapa</div>
+            <img src="/Kayapa_Nueva_Vizcaya.png" alt="Kayapa Logo" className="logo-mark-img" />
+            <div className="logo-text-wrapper">
+              <div className="logo-text">Kayapa Farm to Market</div>
             </div>
           </div>
         </div>
@@ -89,8 +88,8 @@ export default function Sidebar() {
       {/* ── Mobile Top Header ── */}
       <div className="mobile-header">
         <div className="mobile-logo">
-          <span>🌾</span>
-          <span className="mobile-logo-text">FarmMarket</span>
+          <img src="/Kayapa_Nueva_Vizcaya.png" alt="Kayapa Logo" className="mobile-logo-img" />
+          <span className="mobile-logo-text">Kayapa Farm to Market</span>
         </div>
         <div className="mobile-user-info">
           <span className="mobile-user-name">{user.fname} {user.lname}</span>

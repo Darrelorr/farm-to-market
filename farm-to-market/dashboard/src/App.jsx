@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home.jsx'
-import Dashboard from './pages/Dashboard.jsx'
+import Dashboard from './pages/dashboard.jsx'
 import Products from './pages/Products.jsx'
 import Users from './pages/Users.jsx'
 import Orders from './pages/Orders.jsx'
@@ -27,6 +27,21 @@ function AppLayout({ children }) {
 function PrivateRoute({ children }) {
   const { user } = useAuth()
   return user ? children : <Navigate to="/" replace />
+}
+
+function FarmerRoute({ children }) {
+  const { user } = useAuth()
+  return user && user.role === 'farmer' ? children : <Navigate to="/dashboard" replace />
+}
+
+function BuyerRoute({ children }) {
+  const { user } = useAuth()
+  return user && user.role === 'buyer' ? children : <Navigate to="/dashboard" replace />
+}
+
+function AdminRoute({ children }) {
+  const { user } = useAuth()
+  return user && user.role === 'admin' ? children : <Navigate to="/dashboard" replace />
 }
 
 export default function App() {
@@ -61,14 +76,14 @@ export default function App() {
             </PrivateRoute>
           } />
           <Route path="/users" element={
-            <PrivateRoute>
+            <AdminRoute>
               <AppLayout><Users /></AppLayout>
-            </PrivateRoute>
+            </AdminRoute>
           } />
           <Route path="/reports" element={
-            <PrivateRoute>
+            <AdminRoute>
               <AppLayout><Orders /></AppLayout>
-            </PrivateRoute>
+            </AdminRoute>
           } />
           <Route path="/profile" element={
             <PrivateRoute>
