@@ -23,7 +23,6 @@ export default function Users() {
 
   useEffect(() => {
     if (isProfile && user.role === 'admin') {
-      // admin profile still needs user counts for display
       fetchUsers(true)
     } else if (!isProfile) {
       fetchUsers(false)
@@ -33,11 +32,13 @@ export default function Users() {
   const fetchUsers = async (statsOnly = false) => {
     const res = await axios.get('/api/users')
     const all = res.data
+
     setStats({
       total:   all.length,
       farmers: all.filter(u => u.role === 'farmer').length,
       buyers:  all.filter(u => u.role === 'buyer').length,
     })
+
     if (!statsOnly) setUsers(all)
   }
 
@@ -48,7 +49,9 @@ export default function Users() {
   }
 
   const saveProfile = async () => {
-    const res = await axios.put(`/api/users/${user.id}`, { fname, lname, email, phone, location: loc })
+    const res = await axios.put(`/api/users/${user.id}`, {
+      fname, lname, email, phone, location: loc
+    })
     setUser({ ...user, ...res.data })
     showToast('✅ Profile updated!')
   }
@@ -59,7 +62,10 @@ export default function Users() {
   if (isProfile) {
     return (
       <div>
-        <div className="topbar"><div className="topbar-title">My Profile</div></div>
+        <div className="topbar">
+          <div className="topbar-title">My Profile</div>
+        </div>
+
         <div className="page-content">
 
           <div className="profile-header">
@@ -74,7 +80,7 @@ export default function Users() {
             </div>
           </div>
 
-          {/* Admin stats shown on profile */}
+          {/* ADMIN STATS */}
           {user.role === 'admin' && (
             <div className="profile-stats-row">
               <div className="profile-stat">
@@ -93,7 +99,10 @@ export default function Users() {
           )}
 
           <div className="card">
-            <div className="card-header"><span className="card-title">Account Information</span></div>
+            <div className="card-header">
+              <span className="card-title">Account Information</span>
+            </div>
+
             <div className="card-body">
               <div className="form-row">
                 <div className="form-group">
@@ -105,32 +114,33 @@ export default function Users() {
                   <input value={lname} onChange={e => setLname(e.target.value)} />
                 </div>
               </div>
+
               <div className="form-group">
-                <label>Email Address</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+                <label>Email</label>
+                <input value={email} onChange={e => setEmail(e.target.value)} />
               </div>
+
               <div className="form-group">
-                <label>Contact Number</label>
+                <label>Phone</label>
                 <input value={phone} onChange={e => setPhone(e.target.value)} />
               </div>
+
               {user.role !== 'admin' && (
                 <div className="form-group">
-                  <label>Location / Farm Address</label>
+                  <label>Location</label>
                   <input value={loc} onChange={e => setLoc(e.target.value)} />
                 </div>
               )}
-              <button
-                className="btn btn-primary"
-                style={{ width: 'auto', padding: '10px 28px' }}
-                onClick={saveProfile}
-              >
+
+              <button className="btn btn-primary" onClick={saveProfile}>
                 Save Changes
               </button>
             </div>
           </div>
 
         </div>
-        {toast && <div className="toast-container"><div className="toast">{toast}</div></div>}
+
+        {toast && <div className="toast">{toast}</div>}
       </div>
     )
   }
@@ -140,11 +150,29 @@ export default function Users() {
     <div>
       <div className="topbar">
         <div className="topbar-title">Manage Users</div>
+
+        {/* 🔥 FIXED BIG STATS */}
         <div className="topbar-actions">
           <div className="users-summary">
-            <span>👥 Total: <strong>{stats.total}</strong></span>
-            <span>👨‍🌾 Farmers: <strong>{stats.farmers}</strong></span>
-            <span>🛒 Buyers: <strong>{stats.buyers}</strong></span>
+
+            <div className="summary-item green">
+              <span className="icon">👥</span>
+              <span className="label">Total</span>
+              <span className="value">{stats.total}</span>
+            </div>
+
+            <div className="summary-item earth">
+              <span className="icon">👨‍🌾</span>
+              <span className="label">Farmers</span>
+              <span className="value">{stats.farmers}</span>
+            </div>
+
+            <div className="summary-item amber">
+              <span className="icon">🛒</span>
+              <span className="label">Buyers</span>
+              <span className="value">{stats.buyers}</span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -164,52 +192,36 @@ export default function Users() {
                   <th>Actions</th>
                 </tr>
               </thead>
+
               <tbody>
-                {users.length === 0 ? (
-                  <tr><td colSpan={7}>
-                    <div className="empty-state">
-                      <div className="empty-icon">👥</div>
-                      <p>No users found.</p>
-                    </div>
-                  </td></tr>
-                ) : users.map(u => (
+                {users.map(u => (
                   <tr key={u.id}>
-                    <td>
-                      <div className="user-row">
-                        <div className="user-mini-avatar">{u.fname?.[0]}{u.lname?.[0]}</div>
-                        <strong>{u.fname} {u.lname}</strong>
-                      </div>
-                    </td>
+                    <td>{u.fname} {u.lname}</td>
                     <td>{u.email}</td>
-                    <td><span className="tag">{cap(u.role)}</span></td>
-                    <td>{u.location || '—'}</td>
+                    <td>{cap(u.role)}</td>
+                    <td>{u.location || '-'}</td>
                     <td>{u.joined}</td>
+                    <td>{u.status}</td>
                     <td>
-                      <span className={`badge ${u.status === 'active' ? 'badge-green' : 'badge-red'}`}>
-                        {u.status}
-                      </span>
-                    </td>
-                    <td>
-                      {u.id !== user.id ? (
+                      {u.id !== user.id && (
                         <button
-                          className={`btn btn-sm ${u.status === 'active' ? 'btn-danger' : 'btn-amber'}`}
+                          className={`btn-status ${u.status === 'active' ? 'deactivate' : 'activate'}`}
                           onClick={() => toggleStatus(u.id)}
                         >
                           {u.status === 'active' ? 'Deactivate' : 'Activate'}
                         </button>
-                      ) : (
-                        <span className="text-sm text-muted">You</span>
                       )}
                     </td>
                   </tr>
                 ))}
               </tbody>
+
             </table>
           </div>
         </div>
       </div>
 
-      {toast && <div className="toast-container"><div className="toast">{toast}</div></div>}
+      {toast && <div className="toast">{toast}</div>}
     </div>
   )
 }

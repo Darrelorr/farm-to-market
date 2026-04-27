@@ -1,109 +1,69 @@
-/* Users.css — profile page & admin users page only.
-   Base styles live in App.css. */
-
-.profile-header {
-  background: #2d3a24;
-  border-radius: 8px;
-  padding: 24px 28px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 16px;
-}
-
-.profile-avatar {
-  width: 56px;
-  height: 56px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
-.profile-header-info { display: flex; flex-direction: column; gap: 4px; }
-
-.profile-name {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: #f5efe6;
-}
-
-.profile-role-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.5);
-}
-
-.profile-stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.profile-stat {
-  background: white;
-  border: 1px solid #c5d9b0;
-  border-radius: 8px;
-  padding: 16px 18px;
-  box-shadow: 0 1px 4px rgba(45,58,36,0.06);
-}
-
-.profile-stat-value {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: #1e2a18;
-  line-height: 1;
-}
-
-.profile-stat-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: #5a7040;
-  margin-top: 5px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
 .users-summary {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.5);
+  gap: 12px;
 }
 
-.users-summary strong { color: #a8c47a; }
-
-.user-row { display: flex; align-items: center; gap: 10px; }
-
-.user-mini-avatar {
-  width: 28px;
-  height: 28px;
-  background: #c8e6a0;
-  border-radius: 50%;
+.summary-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  font-weight: 500;
-  color: #2d5a10;
-  flex-shrink: 0;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: 700;
 }
 
-@media (max-width: 768px) {
-  .profile-header     { padding: 18px 20px; }
-  .profile-name       { font-size: 17px; }
-  .profile-stats-row  { gap: 8px; }
-  .profile-stat-value { font-size: 20px; }
+.summary-item .icon {
+  font-size: 20px;
+}
+
+.summary-item .value {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.summary-item.green {
+  background: #d4f5e8;
+  color: #1e5f35;
+}
+
+.summary-item.earth {
+  background: #eedcc9;
+  color: #92400e;
+}
+
+.summary-item.amber {
+  background: #fef3e6;
+  color: #d97706;
+}
+.btn-status {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-status.deactivate {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btn-status.deactivate:hover {
+  background: #dc2626;
+}
+
+.btn-status.activate {
+  background: #3faf6a;
+  color: #fff;
+}
+
+.btn-status.activate:hover {
+  background: #d97706;
+}
+
+.btn-status:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
