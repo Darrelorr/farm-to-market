@@ -38,11 +38,11 @@ export default function MovieWatchList() {
   const getUser    = (id) => users.find(u => u.id === id)
   const getProduct = (id) => products.find(p => p.id === id)
 
-  const myOrders = user.role === 'farmer'
+  const myOrders = (user.role === 'farmer'
     ? orders.filter(o => o.farmerId === user.id)
     : user.role === 'buyer'
     ? orders.filter(o => o.buyerId === user.id)
-    : orders
+    : orders).filter(o => o.qty > 0)
 
   const updateStatus = async (id, status) => {
     await axios.patch(`/api/orders/${id}/status`, { status })

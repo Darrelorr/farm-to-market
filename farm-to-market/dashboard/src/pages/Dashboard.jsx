@@ -31,11 +31,6 @@ export default function Dashboard() {
 
   const stats = getStats(user, orders, products, users)
 
-  // 👉 summary stats (ADMIN only)
-  const totalUsers = users.length
-  const farmers = users.filter(u => u.role === 'farmer').length
-  const buyers  = users.filter(u => u.role === 'buyer').length
-
   return (
     <div>
       <div className="topbar">
@@ -43,8 +38,6 @@ export default function Dashboard() {
       </div>
 
       <div className="page-content">
-
-        {/* MAIN STATS */}
         <div className="stats-grid">
           {stats.map((s, i) => (
             <div className="stat-card" key={i}>
@@ -56,36 +49,6 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-
-        {/* 🔥 NEW BIG SUMMARY SECTION */}
-        {user.role === 'admin' && (
-          <div className="summary-grid">
-            <div className="summary-card">
-              <div className="summary-icon green">👥</div>
-              <div>
-                <div className="summary-value">{totalUsers}</div>
-                <div className="summary-label">Total Users</div>
-              </div>
-            </div>
-
-            <div className="summary-card">
-              <div className="summary-icon earth">👨‍🌾</div>
-              <div>
-                <div className="summary-value">{farmers}</div>
-                <div className="summary-label">Farmers</div>
-              </div>
-            </div>
-
-            <div className="summary-card">
-              <div className="summary-icon amber">🛒</div>
-              <div>
-                <div className="summary-value">{buyers}</div>
-                <div className="summary-label">Buyers</div>
-              </div>
-            </div>
-          </div>
-        )}
-
       </div>
     </div>
   )
@@ -93,10 +56,10 @@ export default function Dashboard() {
 
 function getStats(user, orders, products, users) {
   if (user.role === 'farmer') {
-    const myProducts   = products.filter(p => p.farmerId === user.id)
-    const myOrders     = orders.filter(o => o.farmerId === user.id)
-    const pending      = myOrders.filter(o => o.status === 'pending').length
-    const revenue      = myOrders
+    const myProducts = products.filter(p => p.farmerId === user.id)
+    const myOrders   = orders.filter(o => o.farmerId === user.id)
+    const pending    = myOrders.filter(o => o.status === 'pending').length
+    const revenue    = myOrders
       .filter(o => o.status === 'completed')
       .reduce((s, o) => s + o.total, 0)
 
@@ -116,9 +79,9 @@ function getStats(user, orders, products, users) {
       .reduce((s, o) => s + o.total, 0)
 
     return [
-      { icon: '🛒', color: 'green', value: products.length,   label: 'Available Products' },
-      { icon: '📦', color: 'amber', value: myOrders.length,   label: 'My Orders' },
-      { icon: '✅', color: 'earth', value: completed,          label: 'Completed Orders' },
+      { icon: '🛒', color: 'green', value: products.length,  label: 'Available Products' },
+      { icon: '📦', color: 'amber', value: myOrders.length,  label: 'My Orders' },
+      { icon: '✅', color: 'earth', value: completed,         label: 'Completed Orders' },
       { icon: '💳', color: 'blue',  value: '₱' + spent.toLocaleString(), label: 'Total Spent' },
     ]
   }
