@@ -76,17 +76,6 @@ npm run dev
 
 Open your browser at **http://localhost:5173**
 
----
-
-## 🔑 Demo Accounts
-
-| Role   | Email              | Password |
-|--------|--------------------|----------|
-| Farmer | farmer@demo.com    | demo     |
-| Farmer | farmer2@demo.com   | demo     |
-| Buyer  | buyer@demo.com     | demo     |
-| Buyer  | buyer2@demo.com    | demo     |
-| Admin  | admin@demo.com     | demo     |
 
 ---
 
